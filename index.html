@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link type="text/css" rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <main>
+            <header>
+                <a href="http://truecar.com" target="_blank">
+                    <img src="images/logo.png">
+                </a>
+            </header>
+            <div class="content">
+                <div class="divAddItems">
+                    <div class="divControl">
+                        <div class="divRight">
+                            <input id="inpItem" type="text">
+                            <button id="btnAdd">Add <span class="spanArrowRight"></span></button>
+                        </div>
+                        <div class="divLeft">Add Item:</div>
+                    </div>
+                    <div class="divControl">
+                        <div class="divRight">
+                            <textarea id="txtJSON"></textarea>
+                        </div>
+                        <div class="divLeft">JSON:</div>
+                    </div>
+                    <div class="divControl">
+                        <div class="divRight">
+                            <button id="btnLoad">Load JSON</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="divListItems">
+                    <h4>Items</h4>
+                    <ol id="olItems">
+                        <li><span>Item 1</span><a id="lnkDelete-0">delete</a></li>
+                        <li><span>Item 2</span><a id="lnkDelete-1">delete</a></li>
+                    </ol>
+
+                </div>
+            </div>
+        </main>
+    <script src="js/main.js"></script>
+    </body>
+</html>
