@@ -3,6 +3,21 @@ function getEventTarget(e) { // handle IE event target
   return e.target || e.srcElement;
 }
 
+function useTransition() {
+    var s = document.documentElement.style;
+    if (
+        typeof s.webkitTransition !== 'undefined' ||
+        typeof s.MozTransition !== 'undefined' ||
+        typeof s.OTransition !== 'undefined' ||
+        typeof s.MsTransition !== 'undefined' ||
+        typeof s.transition !== 'undefined'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+}
+
 function addItem(itemValue) {
     var oList = document.getElementById('olItems');
     var inpItem = document.getElementById('inpItem');
@@ -36,19 +51,14 @@ function addItem(itemValue) {
 
 function deleteItem(target) { // fade the item out
     var liRemove = target.parentNode;
-    var userAgent = navigator.userAgent;
-    var index = userAgent.indexOf('MSIE');
-    if (index > -1){ // kinda ugly browser sniffing, but not much else I can do here for IE9
-        var ieVer = parseInt(userAgent.substring(index + 5, index + 9), 10);
-        if (ieVer === 9) {
-            liRemove.parentNode.removeChild(liRemove);
-            toJSON();
-            return;
-        }
-
-    }
-    liRemove.id = 'removeMe';
-    liRemove.className = 'fadeOut';
+    if (useTransition() === true){
+          liRemove.id = 'removeMe';
+          liRemove.className = 'fadeOut';
+      } else {
+          liRemove.parentNode.removeChild(liRemove);
+          toJSON();
+          return;
+      }
 }
 
 function removeElement() { // remove li from the DOM
