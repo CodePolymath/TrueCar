@@ -57,7 +57,6 @@ function deleteItem(target) { // fade the item out
     } else {
         liRemove.parentNode.removeChild(liRemove);
         toJSON();
-        return;
     }
 }
 
@@ -84,7 +83,7 @@ function toJSON() {
 
 function fromJSON() {
     var txtJSON = document.getElementById('txtJSON');
-    var strValue = txtJSON.value.replace(/\[|\]/g,''); // remove the square brackets
+    var strValue = txtJSON.value.replace(/^\[|\]$/g,''); // remove the square brackets at start and end of string
     document.getElementById('olItems').innerHTML = ''; // clear out the LIs
     var strArray;
     try {
