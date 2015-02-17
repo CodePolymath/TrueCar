@@ -36,6 +36,17 @@ function addItem(itemValue) {
 
 function deleteItem(target) { // fade the item out
     var liRemove = target.parentNode;
+    var userAgent = navigator.userAgent;
+    var index = userAgent.indexOf('MSIE');
+    if (index > -1){ // kinda ugly browser sniffing, but not much else I can do here for IE9
+        var ieVer = parseInt(userAgent.substring(index + 5, index + 9), 10);
+        if (ieVer === 9) {
+            liRemove.parentNode.removeChild(liRemove);
+            toJSON();
+            return;
+        }
+
+    }
     liRemove.id = 'removeMe';
     liRemove.className = 'fadeOut';
 }
