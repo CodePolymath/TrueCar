@@ -8,7 +8,7 @@ function addItem(itemValue) {
     var inpItem = document.getElementById('inpItem');
     var inpValue = inpItem.value;
     if (typeof itemValue === 'string'){ // replace input value if a string was passed to fn()
-        inpValue = itemValue;
+        inpValue = itemValue.replace(/\"/g,'');
     }
     if (inpValue.length === 0){ // basic input validation
         inpItem.focus();
@@ -55,6 +55,10 @@ function toJSON() {
         liArray.push(liCollection[i].childNodes[0].textContent); // we want the text
     }
     var txtJSON = document.getElementById('txtJSON');
+    //txtJSON = txtJSON.replace(/\W,|,\W/g,'"');
+    liArray = liArray.map(function(item, i){ // Array.map to properly stringify my JSON array
+      return '"' + item + '"';
+    });
     txtJSON.value = '[' + liArray.toString() + ']';
 }
 
