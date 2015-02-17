@@ -54,11 +54,10 @@ function deleteItem(target) { // fade the item out
     if (useTransition() === true){
           liRemove.id = 'removeMe';
           liRemove.className = 'fadeOut';
-      } else {
-          liRemove.parentNode.removeChild(liRemove);
-          toJSON();
-          return;
-      }
+    } else {
+        liRemove.parentNode.removeChild(liRemove);
+        toJSON();
+    }
 }
 
 function removeElement() { // remove li from the DOM
