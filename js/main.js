@@ -3,7 +3,7 @@ function getEventTarget(e) { // handle IE event target
   return e.target || e.srcElement;
 }
 
-function useTransition() {
+function useTransition() { // feature detection for CSS transition
     var s = document.documentElement.style;
     if (
         typeof s.webkitTransition !== 'undefined' ||
@@ -12,9 +12,9 @@ function useTransition() {
         typeof s.MsTransition !== 'undefined' ||
         typeof s.transition !== 'undefined'
     ) {
-      return true;
+        return true;
     } else {
-      return false;
+        return false;
     }
 }
 
@@ -52,11 +52,12 @@ function addItem(itemValue) {
 function deleteItem(target) { // fade the item out
     var liRemove = target.parentNode;
     if (useTransition() === true){
-          liRemove.id = 'removeMe';
-          liRemove.className = 'fadeOut';
+        liRemove.id = 'removeMe';
+        liRemove.className = 'fadeOut';
     } else {
         liRemove.parentNode.removeChild(liRemove);
         toJSON();
+        return;
     }
 }
 
@@ -75,9 +76,8 @@ function toJSON() {
         liArray.push(liCollection[i].childNodes[0].textContent); // we want the text
     }
     var txtJSON = document.getElementById('txtJSON');
-    //txtJSON = txtJSON.replace(/\W,|,\W/g,'"');
     liArray = liArray.map(function(item, i){ // Array.map to properly stringify my JSON array
-      return '"' + item + '"';
+        return '"' + item + '"';
     });
     txtJSON.value = '[' + liArray.toString() + ']';
 }
@@ -101,40 +101,42 @@ function fromJSON() {
     }
 }
 
-document.onclick = function(e){ // basic event delegation for click events
-    var target = getEventTarget(e);
-    if (target.id){ // only respond to elements with an ID
-        switch (true){
-            case (target.id === 'btnAdd'):
-                addItem(target);
-            break;
-            case (target.id === 'btnLoad'):
-                fromJSON();
-            break;
-            case (target.id.indexOf('Delete') > -1): // respond to any link like lnkDelete-nn
-                deleteItem(target);
-            break;
+document.addEventListener("DOMContentLoaded", function() { // modern browser method for DOM ready
+    document.onclick = function(e){ // basic event delegation for click events
+        var target = getEventTarget(e);
+        if (target.id){ // only respond to elements with an ID
+            switch (true){
+                case (target.id === 'btnAdd'):
+                    addItem(target);
+                break;
+                case (target.id === 'btnLoad'):
+                    fromJSON();
+                break;
+                case (target.id.indexOf('Delete') > -1): // respond to any link like lnkDelete-nn
+                    deleteItem(target);
+                break;
+            }
         }
-    }
-};
+    };
 
-/* event handling for fading out the LIs */
-document.addEventListener('transitionend',
-    removeElement, false
-);
-document.addEventListener('webkitTransitionEnd',
-    removeElement, false
-);
-document.addEventListener('oTransitionEnd',
-    removeElement, false
-);
-document.addEventListener('otransitionend',
-    removeElement, false
-);
-document.addEventListener('MSTransitionEnd',
-    removeElement, false
-);
+    /* event handling for fading out the LIs */
+    document.addEventListener('transitionend',
+        removeElement, false
+    );
+    document.addEventListener('webkitTransitionEnd',
+        removeElement, false
+    );
+    document.addEventListener('oTransitionEnd',
+        removeElement, false
+    );
+    document.addEventListener('otransitionend',
+        removeElement, false
+    );
+    document.addEventListener('MSTransitionEnd',
+        removeElement, false
+    );
 
-toJSON(); // setup the JSON field
+    toJSON(); // setup the JSON field
 
-document.getElementById('inpItem').focus();
+    document.getElementById('inpItem').focus();
+});

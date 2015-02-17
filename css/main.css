@@ -49,7 +49,6 @@ button {
     background: -o-linear-gradient(top, rgba(116,194,56,1) 0%, rgba(47,80,29,1) 100%);
     background: -ms-linear-gradient(top, rgba(116,194,56,1) 0%, rgba(47,80,29,1) 100%);
     background: linear-gradient(to bottom, rgba(116,194,56,1) 0%, rgba(47,80,29,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74c238', endColorstr='#2f501d', GradientType=0 );
 }
 
 input {
@@ -104,7 +103,6 @@ h4 {
     background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
     background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
     background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
     -webkit-box-shadow: 1px 1px 2px 2px rgba(170,170,170,1);
     -moz-box-shadow: 1px 1px 2px 2px rgba(170,170,170,1);
     box-shadow: 1px 1px 2px 2px rgba(170,170,170,1);
@@ -193,7 +191,6 @@ ol li:before {
     background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(255,250,232,1) 100%);
     background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(255,250,232,1) 100%);
     background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(255,250,232,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fffae8', GradientType=0 );
 }
 
 ol li a {
