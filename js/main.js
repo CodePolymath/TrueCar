@@ -24,7 +24,7 @@ function addItem(itemValue) {
         inpValue = itemValue.replace(/\"/g,'');
     }
     if (inpValue.length === 0){ // basic input validation
-        inpItem.focus();
+        app.DOMelements.inpItem.focus();
         alert('Please enter an item first.');
         return;
     }
@@ -42,8 +42,8 @@ function addItem(itemValue) {
     lnkNew.id = 'lnkDelete-' + count.toString();
     liNew.appendChild(lnkNew);
     app.DOMelements.oList.appendChild(liNew);
-    inpItem.value = '';
-    inpItem.focus();
+    app.DOMelements.inpItem.value = '';
+    app.DOMelements.inpItem.focus();
     toJSON(); // reset the textarea
 }
 
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() { // modern browser met
         oList: document.getElementById('olItems'),
         txtJSON: document.getElementById('txtJSON'),
         inpItem: document.getElementById('inpItem')
-    }
+    };
 
     document.onclick = function(e){ // basic event delegation for click events
         var target = getEventTarget(e);
