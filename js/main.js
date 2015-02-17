@@ -97,9 +97,7 @@ function fromJSON() {
 var app = app || {}; // create an app namespace
 
 document.addEventListener("DOMContentLoaded", function() { // modern browser method for DOM ready
-    if (typeof app.useTrasition === 'undefined') {
-        app.useTransition = useTransition();
-    }
+    app.useTransition = useTransition();
 
     app.DOMelements = {
         oList: document.getElementById('olItems'),
