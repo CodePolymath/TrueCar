@@ -19,9 +19,7 @@ function useTransition() { // feature detection for CSS transition
 }
 
 function addItem(itemValue) {
-    var oList = document.getElementById('olItems');
-    var inpItem = document.getElementById('inpItem');
-    var inpValue = inpItem.value;
+    var inpValue = app.DOMelements.inpItem.value;
     if (typeof itemValue === 'string'){ // replace input value if a string was passed to fn()
         inpValue = itemValue.replace(/\"/g,'');
     }
@@ -30,7 +28,7 @@ function addItem(itemValue) {
         alert('Please enter an item first.');
         return;
     }
-    var liLast = oList.lastElementChild;
+    var liLast = app.DOMelements.oList.lastElementChild;
     var count = 0;
     if (liLast !== null) { // if there is at least one li, use it to set count
         var lnk = liLast.getElementsByTagName('A')[0];
@@ -43,7 +41,7 @@ function addItem(itemValue) {
     lnkNew.innerHTML = 'delete';
     lnkNew.id = 'lnkDelete-' + count.toString();
     liNew.appendChild(lnkNew);
-    oList.appendChild(liNew);
+    app.DOMelements.oList.appendChild(liNew);
     inpItem.value = '';
     inpItem.focus();
     toJSON(); // reset the textarea
@@ -51,8 +49,8 @@ function addItem(itemValue) {
 
 function deleteItem(target) { // fade the item out
     var liRemove = target.parentNode;
-    if (useTransition() === true){
-        liRemove.id = 'removeMe';
+    if (app.useTransition === true){
+        app.removeMe = liRemove;
         liRemove.className = 'fadeOut';
     } else {
         liRemove.parentNode.removeChild(liRemove);
@@ -61,30 +59,26 @@ function deleteItem(target) { // fade the item out
 }
 
 function removeElement() { // remove li from the DOM
-    var oList = document.getElementById('olItems');
-    var removeMe = document.getElementById('removeMe');
-    oList.removeChild(removeMe);
+    app.DOMelements.oList.removeChild(app.removeMe);
+    app.removeMe = null;
     toJSON();
 }
 
 function toJSON() {
-    var oList = document.getElementById('olItems');
-    var liCollection = oList.getElementsByTagName('LI');
+    var liCollection = app.DOMelements.oList.getElementsByTagName('LI');
     var liArray = [];
     for (var i = 0, l = liCollection.length; i < l; i++){
         liArray.push(liCollection[i].childNodes[0].textContent); // we want the text
     }
-    var txtJSON = document.getElementById('txtJSON');
     liArray = liArray.map(function(item, i){ // Array.map to properly stringify my JSON array
         return '"' + item + '"';
     });
-    txtJSON.value = '[' + liArray.toString() + ']';
+    app.DOMelements.txtJSON.value = '[' + liArray.toString() + ']';
 }
 
 function fromJSON() {
-    var txtJSON = document.getElementById('txtJSON');
-    var strValue = txtJSON.value.replace(/^\[|\]$/g,''); // remove the square brackets at start and end of string
-    document.getElementById('olItems').innerHTML = ''; // clear out the LIs
+    var strValue = app.DOMelements.txtJSON.value.replace(/^\[|\]$/g,''); // remove the square brackets at start and end of string
+    app.DOMelements.oList.innerHTML = ''; // clear out the LIs
     var strArray;
     try {
         strArray = strValue.split(',');
@@ -100,7 +94,19 @@ function fromJSON() {
     }
 }
 
+var app = app || {}; // create an app namespace
+
 document.addEventListener("DOMContentLoaded", function() { // modern browser method for DOM ready
+    if (typeof app.useTrasition === 'undefined') {
+        app.useTransition = useTransition();
+    }
+
+    app.DOMelements = {
+        oList: document.getElementById('olItems'),
+        txtJSON: document.getElementById('txtJSON'),
+        inpItem: document.getElementById('inpItem')
+    }
+
     document.onclick = function(e){ // basic event delegation for click events
         var target = getEventTarget(e);
         if (target.id){ // only respond to elements with an ID
@@ -137,5 +143,5 @@ document.addEventListener("DOMContentLoaded", function() { // modern browser met
 
     toJSON(); // setup the JSON field
 
-    document.getElementById('inpItem').focus();
+    app.DOMelements.inpItem.focus();
 });
